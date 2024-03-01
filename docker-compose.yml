@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  CRUD-John:
+    container_name: laravelapp
+    image: francescoxx/laravelapp:1.0.0
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    container_name: db
+    image: postgres:12
+    ports:
+      - "5432:5432"
+
+    environment:
+      DB_CONNECTION: pgsql
+      DB_HOST: 172.24.0.2
+      DB_PORT: 5432
+      DB_DATABASE: postgres
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data: {}
